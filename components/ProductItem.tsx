@@ -7,7 +7,7 @@
  */
 
 import dynamic from 'next/dynamic'
-import { memo, useState } from "react";
+import { CSSProperties, memo, useState } from "react";
 import { Product } from "../types/Product";
 import { AddProductToWishListProps } from './AddTProductToWishList'
 
@@ -21,14 +21,15 @@ const AddProductToWishList = dynamic<AddProductToWishListProps>(() => {
 
 interface ProductItemProps {
   product: Product;
+  style: CSSProperties;
   onAddToWishlist: (id: number) => void;
 }
 
-function ProductItemComponent({ product, onAddToWishlist }: ProductItemProps) {
+function ProductItemComponent({ product, onAddToWishlist, style }: ProductItemProps) {
   const [isAddToWishlistRequested, setIsAddToWishlistRequested] = useState(false)
   
   return (
-    <div>
+    <div style={style}>
       <span style={{ marginRight: '8px'}}>
         {product.title} - <strong>{product.priceFormatted}</strong>
       </span>
