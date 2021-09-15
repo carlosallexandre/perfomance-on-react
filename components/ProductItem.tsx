@@ -6,8 +6,18 @@
  * 4. Medium to big size
  */
 
-import { memo } from "react";
+import dynamic from 'next/dynamic'
+import { memo, useState } from "react";
 import { Product } from "../types/Product";
+import { AddProductToWishListProps } from './AddTProductToWishList'
+
+const AddProductToWishList = dynamic<AddProductToWishListProps>(() => {
+  return import('./AddTProductToWishList').then(mod => mod.AddProductToWishList)
+}, {
+  loading: function Loading() { 
+    return <span>Carregando...</span> 
+  }
+})
 
 interface ProductItemProps {
   product: Product;
@@ -15,14 +25,23 @@ interface ProductItemProps {
 }
 
 function ProductItemComponent({ product, onAddToWishlist }: ProductItemProps) {
+  const [isAddToWishlistRequested, setIsAddToWishlistRequested] = useState(false)
+  
   return (
     <div>
       <span style={{ marginRight: '8px'}}>
         {product.title} - <strong>{product.priceFormatted}</strong>
       </span>
-      <button onClick={() => onAddToWishlist(product.id)}>
+      <button onClick={() => setIsAddToWishlistRequested(true)}>
         Add to whishlist
       </button>
+
+      { isAddToWishlistRequested && (
+        <AddProductToWishList 
+          onAddToWishlist={() => onAddToWishlist(product.id)}
+          onRequestClose={() => setIsAddToWishlistRequested(false)}
+        />
+      )}
     </div>
   )
 }
