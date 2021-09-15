@@ -18,7 +18,7 @@ function ProductItemComponent({ product, onAddToWishlist }: ProductItemProps) {
   return (
     <div>
       <span style={{ marginRight: '8px'}}>
-        {product.title} - <strong>{product.price}</strong>
+        {product.title} - <strong>{product.priceFormatted}</strong>
       </span>
       <button onClick={() => onAddToWishlist(product.id)}>
         Add to whishlist
