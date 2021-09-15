@@ -1,4 +1,8 @@
-import { FormEvent, useState } from "react"
+/**
+ * useCallback when: ref equality
+ */
+
+import { FormEvent, useCallback, useState } from "react"
 import { SearchResults } from "../components/SearchResults"
 
 export default function Home() {
@@ -16,6 +20,10 @@ export default function Home() {
     setResults(results)
   }
 
+  const addToWishlist = useCallback((id: number) => {
+    console.log(id)
+  }, [])
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -27,7 +35,7 @@ export default function Home() {
         <button type="submit">Search</button>
       </form>
 
-      <SearchResults results={results}  />
+      <SearchResults results={results} onAddToWishlist={addToWishlist} />
     </>
   )
 }
